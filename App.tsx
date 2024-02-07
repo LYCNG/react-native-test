@@ -1,75 +1,41 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useFonts } from "expo-font";
 import React from "react";
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
-import Home from "./pages/Home";
+import Detail from "./screens/Detail";
+import Home from "./screens/Home";
 
 const Stack = createNativeStackNavigator();
 
-export type Props = {
-  name: string;
-  baseEnthusiasmLevel?: number;
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: "transparent",
+  },
 };
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen1223</Text>
-    </View>
-  );
-}
 
-function BodyScreen() {
-  const arr = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-  ];
+const App = () => {
+  const [loaded] = useFonts({
+    InterBold: require("./assets/fonts/Inter-Bold.ttf"),
+    InterSemiBold: require("./assets/fonts/Inter-SemiBold.ttf"),
+    InterMedium: require("./assets/fonts/Inter-Medium.ttf"),
+    InterRegular: require("./assets/fonts/Inter-Regular.ttf"),
+    InterLight: require("./assets/fonts/Inter-Light.ttf"),
+  });
 
+  if (!loaded) return null;
   return (
-    <View style={styles.container}>
-      <View style={{ height: 300, width: 200 }}>
-        <ScrollView>
-          {arr.map((i) => (
-            <Button key={i} title={"button" + i.toString() + "12121212"} />
-          ))}
-        </ScrollView>
-      </View>
-    </View>
-  );
-}
-
-const App: React.FC<Props> = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            title: "React Native App ",
-            headerStyle: {
-              backgroundColor: "#f4511e",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-          }}
-        />
+    <NavigationContainer theme={theme}>
+      <Stack.Navigator
+        screenOptions={{ headerShown: true }}
+        initialRouteName="Home"
+      >
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Details" component={Detail} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  greeting: {
-    fontSize: 20,
-    fontWeight: "bold",
-    margin: 16,
-  },
-});
 
 export default App;
