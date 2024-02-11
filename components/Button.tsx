@@ -53,7 +53,7 @@ export const RectButton: React.FC<RectButtonType> = ({
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.primary,
         borderRadius: SIZES.extraLarge,
         minWidth: minWidth,
         padding: SIZES.small,

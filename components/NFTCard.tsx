@@ -1,21 +1,23 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Image, View } from "react-native";
+import { Image, Text, View } from "react-native";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { COLORS, NFTData, SHADOWS, SIZES, assets } from "../constants";
-import { RootStackParams } from "../navigation/types";
+import { RootStackParamList } from "../navigation/types";
 import { CircleButton, RectButton } from "./Button";
 import { EthPrice, NFTTitle, SubInfo } from "./SubInfo";
 
 export type NFTDataType = (typeof NFTData)[0];
+
+export type BidType = NFTDataType['bids'][0];
 
 interface NFTCardType {
   data: NFTDataType;
 }
 
 const NFTCard: React.FC<NFTCardType> = ({ data }) => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <View
       style={{
@@ -43,6 +45,7 @@ const NFTCard: React.FC<NFTCardType> = ({ data }) => {
           right={10}
           top={10}
         />
+        </View> 
         <SubInfo />
         <View style={{ width: "100%", padding: SIZES.font }}>
           <NFTTitle
@@ -56,10 +59,12 @@ const NFTCard: React.FC<NFTCardType> = ({ data }) => {
               marginTop: SIZES.font,
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems: "center",
+            alignItems: "center",
+              width: "100%",
             }}
           >
-            <EthPrice price={data.price} />
+          <EthPrice price={data.price} />
+  
             <RectButton
               minWidth={120}
               fontSize={SIZES.font}
@@ -68,7 +73,6 @@ const NFTCard: React.FC<NFTCardType> = ({ data }) => {
           </View>
         </View>
       </View>
-    </View>
   );
 };
 
